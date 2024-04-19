@@ -15,17 +15,21 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class Etudiant {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id ;
-    private String nom ;
-    private String email ;
+public class Etudiant extends Utilisateur{
+
+
     private Long tel ;
     private String specialite ;
     private String encadrant ;
     private Date datePfe;
+
+    public Etudiant(String nom, String email, String password, Long tel, String specialite, String encadrant, Date datePfe) {
+        super(nom, email, password);
+        this.tel = tel ;
+        this.specialite = specialite;
+        this.encadrant = encadrant;
+        this.datePfe = datePfe ;
+    }
 
     @OneToMany(mappedBy = "etudiant")
     private List<Tache> taches;
