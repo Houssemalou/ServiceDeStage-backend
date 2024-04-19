@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -27,5 +29,13 @@ public class Etudiant {
 
     @OneToMany(mappedBy = "etudiant")
     private List<Tache> taches;
+
+    @ManyToMany
+    @JoinTable(
+            name = "etudiant_evenement",
+            joinColumns = @JoinColumn(name = "etudiant_id"),
+            inverseJoinColumns = @JoinColumn(name = "evenement_id")
+    )
+    private Set<Evenement> evenements = new HashSet<>();
 
 }
