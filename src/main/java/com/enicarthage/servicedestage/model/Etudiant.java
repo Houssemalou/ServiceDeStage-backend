@@ -7,28 +7,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Tache {
-
+public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id ;
-    private String titre ;
-    private Date date_debut ;
-    private  Date date_fin ;
-    @Enumerated(EnumType.STRING)
-    private EtatTache etat ;
-    @Enumerated(EnumType.STRING)
-    private PrioriteTache priorite ;
+    private String nom ;
+    private String email ;
+    private Long tel ;
+    private String specialite ;
+    private String encadrant ;
+    private Date datePfe;
 
-    @ManyToOne
-    @JoinColumn(name = "etudiant_id")
-    private Etudiant etudiant;
-
+    @OneToMany(mappedBy = "etudiant")
+    private List<Tache> taches;
 
 }
