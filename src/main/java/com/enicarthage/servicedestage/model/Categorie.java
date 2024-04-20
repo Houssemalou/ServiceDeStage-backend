@@ -4,10 +4,11 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-
+@Entity
+@Setter
+@Getter
 public class Categorie {
-    @Setter
-    @Getter
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
