@@ -1,31 +1,26 @@
 package com.enicarthage.servicedestage.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Message {
-
+public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long chat_id ;
-    private String content;
+    private Long id ;
 
-    @ManyToOne
-    @JoinColumn(name = "sender_id")
-    private Utilisateur sender ;
+    private String text;
 
-    @ManyToOne
-    @JoinColumn(name = "receiver_id")
-    private Utilisateur receiver ;
+    @Column(name = "recipient")
+    private String to;
 
     @CreationTimestamp
     private LocalDateTime timestamp;

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Chat & Notifications</title>
+    <!-- Bootstrap CSS for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1>WebSocket Chat & Notifications</h1>
+    <hr>
+    <h2>Messages</h2>
+    <div id="messageBox" class="mb-3">
+        <!-- Messages will be displayed here -->
+    </div>
+    <form id="messageForm">
+        <div class="form-group">
+            <label for="message">Message:</label>
+            <input type="text" class="form-control" id="message" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Message</button>
+    </form>
+    <hr>
+    <h2>Notifications</h2>
+    <div id="notificationBox">
+        <!-- Notifications will be displayed here -->
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
+<script>
+
+    var socket = new SockJS('http://localhost:8081/ws');
+    var stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        stompClient.subscribe('/topic/messages/your-chat-id', function (message) {
+            console.log('Received message:', message.body);
+            showMessage(JSON.parse(message.body).content);
+        });
+
+        stompClient.subscribe('/user/queue/notifications', function (notification) {
+            console.log('Received notification:', notification.body);
+            showNotification(JSON.parse(notification.body).content);
+        });
+    });
+
+    function sendMessage(event) {
+        event.preventDefault();
+        var messageInput = document.getElementById('message');
+        var messageContent = messageInput.value.trim();
+
+        if (!messageContent) {
+            console.error('Message content is empty');
+            return;
+        }
+
+        console.log('Sending message:', messageContent);
+
+        stompClient.send("/app/chat/your-chat-id", {}, JSON.stringify({
+            'content': messageContent
+        }));
+
+        messageInput.value = '';
+    }
+
+    function showMessage(message) {
+        var messageBox = document.getElementById('messageBox');
+        var messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        messageBox.appendChild(messageElement);
+    }
+
+    function showNotification(notification) {
+        var notificationBox = document.getElementById('notificationBox');
+        var notificationElement = document.createElement('div');
+        notificationElement.textContent = notification;
+        notificationBox.appendChild(notificationElement);
+    }
+
+    document.getElementById('messageForm').addEventListener('submit', sendMessage);
+</script>
+
+
+</body>
+</html>
