@@ -1,15 +1,13 @@
 package com.enicarthage.servicedestage.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Message {
@@ -17,8 +15,16 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String sender;
-    private String receiver;
+    private Long chat_id ;
     private String content;
-    private Date timestamp;
+
+    @ManyToOne
+    @JoinColumn(name = "sender_id")
+    private Utilisateur sender ;
+
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private Utilisateur receiver ;
+
+    private LocalDateTime timestamp;
 }
