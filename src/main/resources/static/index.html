@@ -26,28 +26,42 @@
     <div id="notificationBox">
         <!-- Notifications will be displayed here -->
     </div>
+    <form id="publicNotificationForm">
+        <div class="form-group">
+            <label for="publicNotification">Public Notification:</label>
+            <input type="text" class="form-control" id="publicNotification" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Public Notification</button>
+    </form>
+    <form id="privateNotificationForm">
+        <div class="form-group">
+            <label for="privateNotification">Private Notification:</label>
+            <input type="text" class="form-control" id="privateNotification" required>
+            <label for="receiver">Receiver:</label>
+            <input type="text" class="form-control" id="receiver" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Send Private Notification</button>
+    </form>
 </div>
-
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <script>
-
     var socket = new SockJS('http://localhost:8081/ws');
     var stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
 
-        stompClient.subscribe('/topic/messages/your-chat-id', function (message) {
+        stompClient.subscribe('/topic/messages/1', function (message) {
             console.log('Received message:', message.body);
             showMessage(JSON.parse(message.body).content);
         });
 
         stompClient.subscribe('/user/queue/notifications', function (notification) {
             console.log('Received notification:', notification.body);
-            showNotification(JSON.parse(notification.body).content);
+            showNotification(JSON.parse(notification.body).text);
         });
     });
 
@@ -63,11 +77,53 @@
 
         console.log('Sending message:', messageContent);
 
-        stompClient.send("/app/chat/your-chat-id", {}, JSON.stringify({
+        stompClient.send("/app/chat/1", {}, JSON.stringify({
             'content': messageContent
         }));
 
         messageInput.value = '';
+    }
+
+    function sendPublicNotification(event) {
+        event.preventDefault();
+        var publicNotificationInput = document.getElementById('publicNotification');
+        var publicNotificationContent = publicNotificationInput.value.trim();
+
+        if (!publicNotificationContent) {
+            console.error('Public notification content is empty');
+            return;
+        }
+
+        console.log('Sending public notification:', publicNotificationContent);
+
+        stompClient.send("/app/notification/public", {}, JSON.stringify({
+            'text': publicNotificationContent
+        }));
+
+        publicNotificationInput.value = '';
+    }
+
+    function sendPrivateNotification(event) {
+        event.preventDefault();
+        var privateNotificationInput = document.getElementById('privateNotification');
+        var receiverInput = document.getElementById('receiver');
+
+        var privateNotificationContent = privateNotificationInput.value.trim();
+        var receiver = receiverInput.value.trim();
+
+        if (!privateNotificationContent || !receiver) {
+            console.error('Private notification content or receiver is empty');
+            return;
+        }
+
+        console.log('Sending private notification:', privateNotificationContent, 'to', receiver);
+
+        stompClient.send(`/app/notification.private/${receiver}`, {}, JSON.stringify({
+            'text': privateNotificationContent
+        }));
+
+        privateNotificationInput.value = '';
+        receiverInput.value = '';
     }
 
     function showMessage(message) {
@@ -85,8 +141,9 @@
     }
 
     document.getElementById('messageForm').addEventListener('submit', sendMessage);
+    document.getElementById('publicNotificationForm').addEventListener('submit', sendPublicNotification);
+    document.getElementById('privateNotificationForm').addEventListener('submit', sendPrivateNotification);
 </script>
-
 
 </body>
 </html>

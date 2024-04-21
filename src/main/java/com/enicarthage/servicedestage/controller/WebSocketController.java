@@ -80,19 +80,21 @@ public class WebSocketController {
         }
     }
 
-    @MessageMapping("/application")
-    public void sendNotification(Notification notification) {
-        System.out.println("Handling send notification: " + notification.getText() + " to: " + notification.getTo());
+    // Send public notification to all users
+    @MessageMapping("/notification/public")
+    public void sendPublicNotification(Notification notification) {
+        System.out.println("Handling send public notification: " + notification.getText());
         notification.setTimestamp(LocalDateTime.now());
-        notificationrepo.save(notification) ;
+        notificationrepo.save(notification);
         messagingTemplate.convertAndSend("/all/notifications", notification);
     }
 
-    @MessageMapping("/notification/{userId}")
-    public void sendNotificationToUser(@DestinationVariable String userId, Notification notification) {
-        System.out.println("Handling send notification to user: " + notification.getText() + " to: " + userId);
+    // Send private notification to a specific user
+    @MessageMapping("/notification.private/{userId}")
+    public void sendPrivateNotification(@DestinationVariable String userId, Notification notification) {
+        System.out.println("Handling send private notification: " + notification.getText() + " to: " + userId);
         notification.setTimestamp(LocalDateTime.now());
-        notificationrepo.save(notification) ;
+        notificationrepo.save(notification);
         messagingTemplate.convertAndSendToUser(userId, "/queue/notifications", notification);
     }
 
