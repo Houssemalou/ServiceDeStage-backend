@@ -4,15 +4,22 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
+@Getter
+@Setter
 @Entity
+
 public class Stage {
-    @Getter
-    @Setter
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "categorie_id")
+    private Categorie categorie;
+
+    @ManyToOne
+    @JoinColumn(name = "partenaire_id")
     private Partenaire partenaire;
 
     @Column

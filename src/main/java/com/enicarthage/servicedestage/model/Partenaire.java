@@ -4,12 +4,15 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
+@Getter
+@Setter
 @Entity
 public class Partenaire {
-    @Getter
-    @Setter
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @Column
@@ -21,5 +24,6 @@ public class Partenaire {
     @Column
     private String local;
 
-    // Getters and setters
+    @OneToMany(mappedBy = "partenaire")
+    private List<Stage> stages;
 }

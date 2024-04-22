@@ -14,16 +14,22 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Evenement {
+public class InfoPfeEtudiant {
+
     @Id
     @GeneratedValue
-    private Long Id ;
-    private String title ;
-    private Date date_debut ;
-    private Date date_fin ;
+    private Long id_Info;
+    private Long tel ;
+    private String specialite ;
+    private String encadrant ;
+    private Date datePfe;
 
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private User admin;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+
+
+
 
 }

@@ -1,21 +1,20 @@
 package com.enicarthage.servicedestage.repository;
 
-import com.enicarthage.servicedestage.model.Stage;
+import com.enicarthage.servicedestage.model.Tache;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface StageRepository extends JpaRepository<Stage, Long> {
+public interface TacheRepository extends JpaRepository<Tache, Long> {
 
 
-    Stage findById(long id);
+    Tache findTacheById(long id);
 
 
     @Override
-    <S extends Stage> S save(S stage);
-
+    <S extends Tache> S save(S tache);
 
     void deleteById(long id);
 
@@ -23,9 +22,8 @@ public interface StageRepository extends JpaRepository<Stage, Long> {
     boolean existsById(long id);
 
 
-    List<Stage> findAll();
+    List<Tache> findAll();
 
 
 }
-
 

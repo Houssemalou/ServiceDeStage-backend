@@ -5,7 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
-import java.util.Date;
+
 
 @Entity
 @Data
@@ -14,18 +14,18 @@ import java.util.Date;
 public class Message {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private Long chat_id ;
     private String content;
 
     @ManyToOne
     @JoinColumn(name = "sender_id")
-    private Utilisateur sender ;
+    private User sender ;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id")
-    private Utilisateur receiver ;
+    private User receiver ;
 
     @CreationTimestamp
     private LocalDateTime timestamp;

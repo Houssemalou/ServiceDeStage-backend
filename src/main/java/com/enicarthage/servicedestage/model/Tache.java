@@ -16,7 +16,7 @@ import java.util.Date;
 public class Tache {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long Id ;
     private String titre ;
     private Date date_debut ;
@@ -28,7 +28,7 @@ public class Tache {
 
     @ManyToOne
     @JoinColumn(name = "etudiant_id")
-    private Etudiant etudiant;
+    private User etudiant;
 
 
 }

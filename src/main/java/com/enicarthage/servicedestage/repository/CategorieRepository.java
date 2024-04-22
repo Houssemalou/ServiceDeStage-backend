@@ -1,7 +1,6 @@
 package com.enicarthage.servicedestage.repository;
 
 import com.enicarthage.servicedestage.model.Categorie;
-import com.enicarthage.servicedestage.model.Etudiant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

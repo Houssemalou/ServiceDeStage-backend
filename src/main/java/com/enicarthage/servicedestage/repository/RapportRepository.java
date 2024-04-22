@@ -1,31 +1,18 @@
 package com.enicarthage.servicedestage.repository;
 
-import com.enicarthage.servicedestage.model.Stage;
+import com.enicarthage.servicedestage.model.Rapport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface StageRepository extends JpaRepository<Stage, Long> {
+public interface RapportRepository extends JpaRepository<Rapport, Long> {
 
 
-    Stage findById(long id);
-
-
+    Rapport findById(long id);
     @Override
-    <S extends Stage> S save(S stage);
-
+    <S extends Rapport> S save(S rapport);
 
     void deleteById(long id);
-
-
     boolean existsById(long id);
-
-
-    List<Stage> findAll();
-
-
 }
-
 

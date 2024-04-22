@@ -1,5 +1,8 @@
 package com.enicarthage.servicedestage.model;
 
+import lombok.Getter;
+
+@Getter
 public enum EtatTache {
     A_FAIRE("À faire"),
     EN_COURS("En cours"),
@@ -11,7 +14,4 @@ public enum EtatTache {
         this.label = label;
     }
 
-    public String getLabel() {
-        return label;
-    }
 }

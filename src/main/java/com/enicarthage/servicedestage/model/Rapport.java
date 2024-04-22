@@ -1,25 +1,23 @@
 package com.enicarthage.servicedestage.model;
 
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Chat {
+public class Rapport {
     @Id
     @GeneratedValue
-    Long id ;
+    private Long id;
+    private String url;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private String nom ;
-    public Chat(String name){
-        this.nom = name;
-    }
 }

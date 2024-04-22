@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Notification {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id ;
 
     private String text;
@@ -25,3 +25,4 @@ public class Notification {
     @CreationTimestamp
     private LocalDateTime timestamp;
 }
+
