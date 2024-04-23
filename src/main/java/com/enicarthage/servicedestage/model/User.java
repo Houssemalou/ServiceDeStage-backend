@@ -2,6 +2,8 @@ package com.enicarthage.servicedestage.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.List;
 
 
@@ -30,6 +32,5 @@ public class User {
 
     @OneToMany(mappedBy = "admin")
     private List<Evenement> evenements;
-
 
 }

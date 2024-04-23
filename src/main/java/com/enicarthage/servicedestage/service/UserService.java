@@ -34,6 +34,5 @@ public class UserService {
         userRepository.deleteById(email);
     }
 
-    // Other CRUD methods as needed
 }
 
