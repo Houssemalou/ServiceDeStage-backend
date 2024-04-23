@@ -30,7 +30,6 @@ public class User {
     @OneToMany(mappedBy = "etudiant")
     private List<Tache> taches;
 
-    @OneToMany(mappedBy = "admin")
-    private List<Evenement> evenements;
+
 
 }
