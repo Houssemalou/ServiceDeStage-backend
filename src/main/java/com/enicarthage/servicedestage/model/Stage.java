@@ -25,9 +25,13 @@ public class Stage {
     @Column
     private String description;
 
+
+
     @Column
     private int duree;
 
     @Column
     private int nbreplaces;
+
+
 }
