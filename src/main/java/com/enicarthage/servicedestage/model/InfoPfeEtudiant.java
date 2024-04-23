@@ -19,17 +19,11 @@ public class InfoPfeEtudiant {
     @Id
     @GeneratedValue
     private Long id_Info;
-    private Long tel ;
-    private String specialite ;
-    private String encadrant ;
+    private String nom;
+    private String email;
+    private Long tel;
+    private String specialite;
+    private String encadrant;
     private Date datePfe;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-
-
-
 
 }

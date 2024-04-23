@@ -21,9 +21,4 @@ public class Evenement {
     private String title ;
     private Date date_debut ;
     private Date date_fin ;
-
-    @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private User admin;
-
 }

@@ -10,6 +10,7 @@ public interface RapportRepository extends JpaRepository<Rapport, Long> {
 
     Rapport findById(long id);
     @Override
+
     <S extends Rapport> S save(S rapport);
 
     void deleteById(long id);
