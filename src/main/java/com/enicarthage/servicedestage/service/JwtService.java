@@ -20,12 +20,12 @@ import java.util.function.Function;
 @Service
 public class JwtService {
     private static final String SECRET_KEY ="5367566B59703373357638792F423F4528482B4D6251655468576D5A71347437";
-    public String extractUseremail(String token) {
+    public String extractUserName(String token) {
 
         return extractClaim(token, Claims::getSubject);
     }
-    public String generateToken(
-            Map<String,Object> extraClaims,
+    public static String generateToken(
+            Map<String, Object> extraClaims,
             UserDetails userDetails
     ){
         return Jwts
@@ -37,12 +37,12 @@ public class JwtService {
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-    public String generateToken(UserDetails userDetails){
+    public static String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(),userDetails);
     }
     public boolean isTokenValid(String token,User userDetails  ){
-        final String useremail = extractUseremail(token);
-        return (useremail.equals(userDetails.getEmail()) && !isTokenExpired(token));
+        final String userName= extractUserName(token);
+        return (userName.equals(userDetails.getEmail()) && !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
@@ -65,7 +65,7 @@ public class JwtService {
                 .getBody();
     }
 
-    private Key getSignInKey() {
+    private static Key getSignInKey() {
         byte [] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
